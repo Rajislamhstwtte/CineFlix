@@ -1,5 +1,5 @@
 
-const apiKey = 'TMDB_API_KEY_HERE';
+const apiKey = '704eac84ae43110c55d1265dccaec186';
 const now_playing = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}`;
 const top_rated = `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}`;
 const now_airing =`https://api.themoviedb.org/3/tv/on_the_air?api_key=${apiKey}`;
