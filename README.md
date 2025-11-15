@@ -1,4 +1,4 @@
-# Welcome to Bingflix!! 
+# Welcome to Cineflix!!
 
 This project is a web application that displays movies and TV series using the TMDB API. It allows users to browse and search for movies and series, view details about them, and watch trailers.
 P.S. (Star it if you liked the concept,It gives me motivation to keep on working and adding features to it.)
@@ -26,9 +26,8 @@ P.S. (Star it if you liked the concept,It gives me motivation to keep on working
 
 1. Clone the repository:
 
-  ```shell
-  git clone https://github.com/your-username/netflix-web-project.git
-  ```
+   ```shell
+   git clone https://github.com/Rajislamhstwtte/cineflix.git
 
 2. Open the `index.html` file in your web browser.
 
