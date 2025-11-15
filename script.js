@@ -1,4 +1,4 @@
-
+const youtubeApiKey = 'AIzaSyAQjdyK7GkG-JZHGg9DYu3Z_z1Jtz2Icuw';
 const apiKey = '704eac84ae43110c55d1265dccaec186';
 const now_playing = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}`;
 const top_rated = `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}`;
@@ -7,51 +7,61 @@ const nowPlayingIndia = `https://api.themoviedb.org/3/movie/now_playing?api_key=
 const bollywood = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=hi-IN&region=IN&with_original_language=hi`;
 
 const top_rated_series = `https://api.themoviedb.org/3/tv/top_rated?api_key=${apiKey}`;
-const korean_series = `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&language=ko-KR&region=KR&sort_by=popularity.desc&with_original_language=ko`;
+const korean_series = `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&language=ko-KR&region=KR&sort_by=popularity.desc`;
 
-    function fetchAndDisplayMovies(url, containerId) {
+  function fetchAndDisplayMovies(url, containerId) {
+    const movieList = document.querySelector('#' + containerId);
+    movieList.innerHTML = ""; // Clear previous content
+    movieList.classList.add('shimmer-placeholder'); // Add shimmer animation
 
-      const movieList = document.querySelector('#' + containerId);
-       movieList.innerHTML = ""; // Clear previous content
-     // Add shimmer animation placeholder
-     movieList.classList.add('shimmer-placeholder');
-
-      fetch(url)
-        .then(response => response.json()) //callback function (returning response.json())
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
-          //const movieList = document.querySelector('#' + containerId);
-          movieList.classList.remove('shimmer-placeholder'); // Remove the shimmer animation placeholder
-    
-          data.results.forEach(movie => {
-            const image = document.createElement('img');
-            image.classList.add('card-image');
-            image.src = `https://image.tmdb.org/t/p/w200${movie.poster_path}`;
-            image.alt = movie.title;
-            image.style.cursor ='pointer';
-            image.style.borderRadius='1.2rem';
+            movieList.classList.remove('shimmer-placeholder'); // Remove shimmer
 
-            // Inside the loop
-               image.classList.add('card-image');
-               image.addEventListener('mouseenter', () => {
-                 image.style.transform = 'scale(1.1)';
-                 });
-               image.addEventListener('mouseleave', () => {
-                 image.style.transform = 'scale(1)';
+            if (!data.results || data.results.length === 0) {
+                movieList.innerHTML = "<p>No movies found.</p>";
+                return;
+            }
+
+            data.results.forEach(movie => {
+                const image = document.createElement('img');
+                image.classList.add('card-image');
+                image.src = movie.poster_path
+                    ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
+                    : 'assets/default-poster.jpg'; // Fallback image
+                image.alt = movie.title || "Untitled";
+                image.style.cursor = 'pointer';
+                image.style.borderRadius = '1.2rem';
+
+                // Hover animation
+                image.addEventListener('mouseenter', () => {
+                    image.style.transform = 'scale(1.1)';
+                    image.style.transition = 'transform 0.3s ease';
+                });
+                image.addEventListener('mouseleave', () => {
+                    image.style.transform = 'scale(1)';
                 });
 
-            image.addEventListener('click', () => {
-              handlePosterClick(movie.id);
-          });
+                // Click interaction
+                image.addEventListener('click', () => {
+                    handlePosterClick(movie.id);
+                });
 
-
-            movieList.appendChild(image);
-          });
-
-        adjustImageHeights();
-
+                movieList.appendChild(image);
+            });
         })
-        .catch(error => console.error('Error fetching data:', error));
-    }
+        .catch(error => {
+            console.error("Fetch error:", error);
+            movieList.classList.remove('shimmer-placeholder');
+            movieList.innerHTML = "<p>Error loading movies.</p>";
+        });
+}
 
      function handlePosterClick(movieId) {
       // Redirect to movie details page with movie ID as URL parameter
