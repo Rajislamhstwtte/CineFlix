@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cineflix - Movies & TV Shows</title>
+    <meta name="description" content="Cineflix is a media discovery platform. Browse movies, view metadata, and manage watchlists. No content is hosted on this server." />
+
+    <!-- PWA Install Prompt Capture (Must be first script) -->
+    <script>
+        window.deferredPrompt = null;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            window.deferredPrompt = e;
+            console.log("PWA Install Prompt captured");
+        });
+    </script>
+
+    <!-- Social Media Meta Tags (Open Graph & Twitter) -->
+    <meta property="og:title" content="Cineflix - Media Discovery" />
+    <meta property="og:description" content="Explore the latest movies and TV shows with Cineflix." />
+    <meta property="og:image" content="https://image.tmdb.org/t/p/w1280/9n2tJBplPbgR2VoA3h_paQ5wMls.jpg" />
+    <meta property="og:url" content="https://cineflix.app" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- PWA Manifest & Theme Color -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#DC2626" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Ads (Popunder) -->
+    <script type='text/javascript' src='//fugitivedepart.com/fb/20/e2/fb20e29220b234138329dd424686fad3.js'></script>
+    
+    <!-- Performance Hints -->
+    <link rel="preconnect" href="https://image.tmdb.org" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              gray: {
+                850: '#1f2937',
+                900: '#111827',
+                950: '#030712', // Deepest black
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --bg-light: #f3f4f6;
+        --text-light: #1f2937;
+        
+        --bg-dark: #030712; /* Solid Deep Black */
+        --text-dark: #f9fafb;
+      }
+      
+      /* Performance Optimization: Simple backgrounds to reduce paint cost */
+      html.dark body {
+        background-color: var(--bg-dark);
+        color: var(--text-dark);
+      }
+      html:not(.dark) body {
+        background-color: var(--bg-light);
+        color: var(--text-light);
+      }
+      
+      body {
+        font-family: 'Poppins', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Custom Scrollbar */
+      .scrollbar-thin {
+        scrollbar-width: thin;
+      }
+      .scrollbar-thin::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      html.dark .scrollbar-thin::-webkit-scrollbar-track {
+        background: #111827;
+      }
+      html:not(.dark) .scrollbar-thin::-webkit-scrollbar-track {
+        background: #e5e7eb;
+      }
+      html.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+        background-color: #374151;
+        border-radius: 3px;
+      }
+      html:not(.dark) .scrollbar-thin::-webkit-scrollbar-thumb {
+        background-color: #9ca3af;
+        border-radius: 3px;
+      }
+
+      @keyframes fade-in-up {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in-up {
+        animation: fade-in-up 0.4s ease-out forwards;
+      }
+      
+      /* HW Accelerated Pulse */
+      @keyframes pulse-glow {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+      }
+      .animate-pulse-glow {
+        animation: pulse-glow 2s infinite ease-in-out;
+        will-change: opacity;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "@vercel/analytics": "https://aistudiocdn.com/@vercel/analytics@^1.5.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+    
+    <!-- Register Service Worker for PWA -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('SW registered: ', registration);
+            })
+            .catch(registrationError => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
+
+    <script type='text/javascript'>
+      // Adsterra Smartlink
+      (function() {
+          var triggered = false;
+          var smartlinkUrl = "https://fugitivedepart.com/s9g8tfyf?key=804ad5f08560b4ce46f5332a0f0b90d7";
+          document.addEventListener('click', function() {
+              if (!triggered) {
+                  triggered = true;
+                  window.open(smartlinkUrl, '_blank');
+              }
+          });
+      })();
+    </script>
+  </body>
+</html>

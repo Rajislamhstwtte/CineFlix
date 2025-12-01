@@ -1,0 +1,5 @@
+{
+  "name": "cineflix best",
+  "description": "Cineflix is a modern media discovery and organization interface powered by the TMDB API. It allows users to explore movie and TV show metadata, view cast details, and manage personal watchlists. Cineflix operates strictly as a client-side search engine; it does not host, upload, or store any media files. All content is aggregated from non-affiliated third-party sources.",
+  "requestFramePermissions": []
+}
